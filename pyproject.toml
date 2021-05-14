@@ -1,0 +1,21 @@
+[tool.poetry]
+name = "is-alive"
+version = "0.1.0"
+description = "Periodically check website availability"
+authors = ["Eduard Maghakyan <edi.maghakyan@gmail.com>"]
+
+[tool.poetry.dependencies]
+python = "^3.9"
+
+[tool.poetry.dev-dependencies]
+mypy = "^0.812"
+flake8 = "^3.9.2"
+isort = "^5.8.0"
+black = "^21.5b1"
+safety = "^1.10.3"
+bandit = "^1.7.0"
+pytest = "^6.2.4"
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
