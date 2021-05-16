@@ -3,8 +3,7 @@ from unittest.mock import Mock
 from kafka.errors import KafkaTimeoutError  # type: ignore
 
 from is_alive.domain.event import DomainEvent
-from is_alive.infrastructure.adapters.kafka_event_publisher import \
-    KafkaEventPublisher
+from is_alive.infrastructure.adapters.kafka_event_publisher import KafkaEventPublisher
 
 
 def test_kafka_event_publisher__publish():

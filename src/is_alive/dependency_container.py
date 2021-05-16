@@ -4,8 +4,7 @@ from kafka import KafkaProducer  # type: ignore
 import is_alive.infrastructure.adapters as adapters
 from is_alive.application.use_cases import CheckAvailability
 from is_alive.config import CONFIG
-from is_alive.infrastructure.adapters.kafka_event_publisher import \
-    MemoryProducer
+from is_alive.infrastructure.adapters.kafka_event_publisher import MemoryProducer
 
 
 class RequesterSpec(pinject.BindingSpec):
