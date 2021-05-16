@@ -3,7 +3,7 @@ import pytest
 from is_alive.application.ports import Requester
 from is_alive.application.ports.requester import ResponseDto
 from is_alive.application.use_cases import CheckAvailability
-from is_alive.domain.model import Availability
+from is_alive.domain.model import Check
 
 
 class SpyRequester(Requester):
@@ -30,7 +30,7 @@ def test_check_availability__available(use_case):
     result = use_case("https://available.com")
 
     assert 1 == use_case.requester.calls
-    assert isinstance(result, Availability)
+    assert isinstance(result, Check)
     assert 200 == result.get_status()
 
 
@@ -38,5 +38,5 @@ def test_check_availability__unavailable(use_case):
     result = use_case("https://unavailable.com")
 
     assert 1 == use_case.requester.calls
-    assert isinstance(result, Availability)
+    assert isinstance(result, Check)
     assert 404 == result.get_status()

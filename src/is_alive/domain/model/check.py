@@ -2,7 +2,7 @@ from dataclasses import dataclass
 
 
 @dataclass
-class Availability:
+class Check:
     status: int = -1
 
     def get_status(self):

@@ -1,1 +1,1 @@
-from .availability import Availability  # noqa
+from .check import Check  # noqa
