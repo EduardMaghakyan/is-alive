@@ -9,14 +9,15 @@ from is_alive.application.use_cases import CheckAvailability
 from is_alive.domain.event import CheckedEvent, DomainEvent
 from is_alive.domain.exception import DomainException
 from is_alive.domain.model import Check
+from is_alive.domain.model.check import CheckStatus
 
 
 class SpyRequester(Requester):
     calls: int = 0
 
     def get(
-            self,
-            url: str,
+        self,
+        url: str,
     ) -> ResponseDto:
         self.calls += 1
 
@@ -49,7 +50,7 @@ def test_check_availability__available(use_case):
 
     assert 1 == use_case.requester.calls
     assert isinstance(result, Check)
-    assert 200 == result.get_status_code()
+    assert CheckStatus.SUCCESS == result.get_status()
 
 
 def test_check_availability__unavailable(use_case):
@@ -57,7 +58,7 @@ def test_check_availability__unavailable(use_case):
 
     assert 1 == use_case.requester.calls
     assert isinstance(result, Check)
-    assert 404 == result.get_status_code()
+    assert CheckStatus.SUCCESS == result.get_status()
 
 
 def test_check_availability__published_event(use_case):
@@ -71,5 +72,5 @@ def test_check_availability__handle_exception(use_case):
     result = use_case("https://unreachable.com")
     expected_event = CheckedEvent(result)
 
-    assert 408 == result.get_status_code()
+    assert CheckStatus.FAIL == result.get_status()
     assert expected_event == use_case.publisher.event_bus.pop()

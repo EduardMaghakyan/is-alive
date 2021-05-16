@@ -1,9 +1,15 @@
 from dataclasses import dataclass
+from enum import Enum
+
+
+class CheckStatus(Enum):
+    SUCCESS = "SUCCESS"
+    FAIL = "FAIL"
 
 
 @dataclass
 class Check:
-    status_code: int = -1
+    status: CheckStatus
 
-    def get_status_code(self):
-        return self.status_code
+    def get_status(self) -> CheckStatus:
+        return self.status

@@ -5,6 +5,7 @@ from is_alive.application.ports.event_publisher import EventPublisher
 from is_alive.domain.event import CheckedEvent
 from is_alive.domain.exception import DomainException
 from is_alive.domain.model import Check
+from is_alive.domain.model.check import CheckStatus
 
 
 @dataclass
@@ -14,11 +15,10 @@ class CheckAvailability(object):
 
     def __call__(self, url) -> Check:
         try:
-            checked = Check()
-            checked.status_code = self.requester.get(url).status_code
-        except DomainException as e:
-            checked = Check()
-            checked.status_code = 408
+            self.requester.get(url)
+            checked = Check(CheckStatus.SUCCESS)
+        except DomainException:
+            checked = Check(CheckStatus.FAIL)
 
         self.publisher.publish(CheckedEvent(checked))
         return checked
