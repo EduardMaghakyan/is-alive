@@ -10,6 +10,6 @@ class HttpRequester(Requester):
     def get(self, url: str) -> ResponseDto:
         try:
             r = requests.get(url)
-            return ResponseDto(status=r.status_code)
+            return ResponseDto(status_code=r.status_code)
         except RequestException as e:
             raise DomainException(response=e.response)

@@ -7,6 +7,7 @@ from is_alive.application.ports.event_publisher import EventPublisher
 from is_alive.application.ports.requester import ResponseDto
 from is_alive.application.use_cases import CheckAvailability
 from is_alive.domain.event import CheckedEvent, DomainEvent
+from is_alive.domain.exception import DomainException
 from is_alive.domain.model import Check
 
 
@@ -14,13 +15,16 @@ class SpyRequester(Requester):
     calls: int = 0
 
     def get(
-        self,
-        url: str,
+            self,
+            url: str,
     ) -> ResponseDto:
         self.calls += 1
 
         if url == "https://available.com":
             return ResponseDto(200)
+
+        if url == "https://unreachable.com":
+            raise DomainException()
 
         return ResponseDto(404)
 
@@ -45,7 +49,7 @@ def test_check_availability__available(use_case):
 
     assert 1 == use_case.requester.calls
     assert isinstance(result, Check)
-    assert 200 == result.get_status()
+    assert 200 == result.get_status_code()
 
 
 def test_check_availability__unavailable(use_case):
@@ -53,11 +57,19 @@ def test_check_availability__unavailable(use_case):
 
     assert 1 == use_case.requester.calls
     assert isinstance(result, Check)
-    assert 404 == result.get_status()
+    assert 404 == result.get_status_code()
 
 
 def test_check_availability__published_event(use_case):
     result = use_case("https://available.com")
     expected_event = CheckedEvent(result)
     assert 1 == use_case.publisher.calls
+    assert expected_event == use_case.publisher.event_bus.pop()
+
+
+def test_check_availability__handle_exception(use_case):
+    result = use_case("https://unreachable.com")
+    expected_event = CheckedEvent(result)
+
+    assert 408 == result.get_status_code()
     assert expected_event == use_case.publisher.event_bus.pop()

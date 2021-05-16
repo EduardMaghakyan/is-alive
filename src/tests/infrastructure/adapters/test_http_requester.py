@@ -28,7 +28,7 @@ def test_get_http_requester__get(mock_requests: MagicMock, mocked_response):
     mock_requests.get.assert_called_once()
     mock_requests.get.assert_called_with(available_url)
     assert isinstance(response, ResponseDto)
-    assert 200 == response.status
+    assert 200 == response.status_code
 
 
 @patch("is_alive.infrastructure.adapters.http_requester.requests")

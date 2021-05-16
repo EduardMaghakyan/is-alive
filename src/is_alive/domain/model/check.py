@@ -3,7 +3,7 @@ from dataclasses import dataclass
 
 @dataclass
 class Check:
-    status: int = -1
+    status_code: int = -1
 
-    def get_status(self):
-        return self.status
+    def get_status_code(self):
+        return self.status_code
