@@ -18,7 +18,7 @@ def mocked_response() -> MagicMock:
 
 
 @patch("is_alive.infrastructure.adapters.http_requester.requests")
-def test_get_http_request(mock_requests: MagicMock, mocked_response):
+def test_get_http_requester__get(mock_requests: MagicMock, mocked_response):
     available_url = "https://dummy-url.com"
     mock_requests.get.return_value = mocked_response
 
@@ -32,7 +32,7 @@ def test_get_http_request(mock_requests: MagicMock, mocked_response):
 
 
 @patch("is_alive.infrastructure.adapters.http_requester.requests")
-def test_get_http_request_handle_timeout(mock_requests: MagicMock):
+def test_get_http_requester__handle_timeout(mock_requests: MagicMock):
     available_url = "https://dummy-url.com"
     mock_requests.get.side_effect = Timeout(response="Request timed out")
 
