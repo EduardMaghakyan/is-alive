@@ -6,8 +6,10 @@ authors = ["Eduard Maghakyan <edi.maghakyan@gmail.com>"]
 
 [tool.poetry.dependencies]
 python = "^3.9"
+requests = "^2.25.1"
 
 [tool.poetry.dev-dependencies]
+pytest-watch = "^4.2.0"
 mypy = "^0.812"
 flake8 = "^3.9.2"
 isort = "^5.8.0"
