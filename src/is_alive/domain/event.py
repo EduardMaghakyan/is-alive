@@ -17,7 +17,7 @@ class DomainEvent:
         return self.__dict__ == other.__dict__
 
     def serialize(self):
-        return json.dumps(self.as_dict())
+        return json.dumps(self.as_dict(), cls=DateTimeEncoder)
 
     def as_dict(self):
         return {
@@ -32,3 +32,10 @@ class DomainEvent:
 class CheckedEvent(DomainEvent):
     def __init__(self, check: Check):
         super().__init__(checked=check)
+
+
+class DateTimeEncoder(json.JSONEncoder):
+    def default(self, obj):
+        if isinstance(obj, datetime):
+            return obj.isoformat()
+        return json.JSONEncoder.default(self, obj)
