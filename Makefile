@@ -3,7 +3,7 @@ tdd:
 
 test:
 	poetry run mypy src/
-	poetry run flake8 --exclude alembic src/
+	poetry run flake8 src/
 	poetry run isort --gitignore --check-only src/
 	poetry run black --check --diff src/
 	poetry run safety check

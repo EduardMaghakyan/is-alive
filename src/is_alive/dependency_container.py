@@ -1,5 +1,5 @@
 import pinject  # type: ignore
-from kafka import KafkaProducer
+from kafka import KafkaProducer  # type: ignore
 
 import is_alive.infrastructure.adapters as adapters
 from is_alive.application.use_cases import CheckAvailability

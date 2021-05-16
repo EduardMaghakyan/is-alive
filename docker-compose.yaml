@@ -3,7 +3,8 @@ version: "3.8"
 services:
   is-alive-check:
     build: .
-    command: [ "python -m is-alive.interface.cli.perform_check" ]
+    env_file:
+      - .env.dev
     depends_on:
       - db
       - zookeeper
@@ -15,11 +16,16 @@ services:
     environment:
       POSTGRES_PASSWORD: example
 
-  adminer:
-    image: adminer
-    restart: always
+  kafka-ui:
+    image: provectuslabs/kafka-ui:latest
+    depends_on:
+      - kafka
     ports:
-      - 8080:8080
+    - "8080:8080"
+    environment:
+      - KAFKA_CLUSTERS_0_NAME=local
+      - KAFKA_CLUSTERS_0_BOOTSTRAPSERVERS=kafka:9092
+      - KAFKA_CLUSTERS_0_ZOOKEEPER=zookeeper:2181
 
   zookeeper:
     image: docker.io/bitnami/zookeeper:3

@@ -1,6 +1,5 @@
 import json
 from datetime import datetime, timezone
-from typing import Sequence
 
 from is_alive.domain.model import Check
 from is_alive.domain.model.check import CheckStatus

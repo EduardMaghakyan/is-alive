@@ -1,6 +1,6 @@
-from dataclasses import dataclass, asdict
+from dataclasses import asdict, dataclass
 from enum import Enum
-from typing import Set, Dict, Any
+from typing import Any, Dict, Set
 
 
 class CheckStatus(Enum):
