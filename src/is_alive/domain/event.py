@@ -1,7 +1,9 @@
 import json
 from datetime import datetime, timezone
+from typing import Sequence
 
 from is_alive.domain.model import Check
+from is_alive.domain.model.check import CheckStatus
 
 
 class DomainEvent:
@@ -17,7 +19,7 @@ class DomainEvent:
         return self.__dict__ == other.__dict__
 
     def serialize(self):
-        return json.dumps(self.as_dict(), cls=DateTimeEncoder)
+        return json.dumps(self.as_dict(), cls=CheckEncoder)
 
     def as_dict(self):
         return {
@@ -34,8 +36,13 @@ class CheckedEvent(DomainEvent):
         super().__init__(checked=check)
 
 
-class DateTimeEncoder(json.JSONEncoder):
+class CheckEncoder(json.JSONEncoder):
     def default(self, obj):
         if isinstance(obj, datetime):
             return obj.isoformat()
+        elif hasattr(obj, "to_dict"):
+            return obj.to_dict()
+        if isinstance(obj, CheckStatus):
+            return {"__enum__": str(obj)}
+
         return json.JSONEncoder.default(self, obj)

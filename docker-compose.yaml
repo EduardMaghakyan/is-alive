@@ -3,7 +3,7 @@ version: "3.8"
 services:
   is-alive-check:
     build: .
-    command: [ "source /app/.venv/bin/activate; python -m is-alive.interface.cli.perform_check" ]
+    command: [ "python -m is-alive.interface.cli.perform_check" ]
     depends_on:
       - db
       - zookeeper

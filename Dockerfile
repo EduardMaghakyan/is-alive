@@ -10,7 +10,9 @@ WORKDIR /app
 
 COPY poetry.lock pyproject.toml ./
 
+RUN poetry config virtualenvs.create false
 RUN poetry install
 COPY ./src /app/
+RUN poetry install
 
-ENTRYPOINT ["poetry", "run"]
+ENTRYPOINT ["python", "-m", "is_alive.interface.cli.perform_check"]

@@ -7,6 +7,9 @@ authors = ["Eduard Maghakyan <edi.maghakyan@gmail.com>"]
 [tool.poetry.dependencies]
 python = "^3.9"
 requests = "^2.25.1"
+kafka-python = "^2.0.2"
+pinject = "^0.14.1"
+environs = "^9.3.2"
 
 [tool.poetry.dev-dependencies]
 pytest-watch = "^4.2.0"
