@@ -1,7 +1,7 @@
 from typing import List
 
-from kafka import KafkaProducer
-from kafka.errors import KafkaTimeoutError
+from kafka import KafkaProducer  # type: ignore
+from kafka.errors import KafkaTimeoutError  # type: ignore
 
 from is_alive.application.ports.event_publisher import EventPublisher
 from is_alive.domain.event import DomainEvent
@@ -36,7 +36,8 @@ class KafkaEventPublisher(EventPublisher):
 
     def publish(self, event: DomainEvent, **attributes) -> None:
         try:
-            self.producer.send("topic", event.serialize())
+            future = self.producer.send(self.topic, event.serialize().encode("utf-8"))
+            future.get(timeout=60)
         except KafkaTimeoutError as e:
             # properly log and maybe raise domain exception
-            pass
+            print(e)
