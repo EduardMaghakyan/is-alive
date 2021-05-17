@@ -1,6 +1,14 @@
 version: "3.8"
 
 services:
+  test:
+    build: .
+    command: ["make", "test"]
+    volumes:
+    - .:/app
+    env_file:
+      - .env.dev
+
   is-alive-check:
     build: .
     env_file:
