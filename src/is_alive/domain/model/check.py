@@ -1,6 +1,6 @@
 from dataclasses import asdict, dataclass
 from enum import Enum
-from typing import Any, Dict, Set
+from typing import Any, Dict, Set, Tuple
 
 
 class CheckStatus(Enum):
@@ -22,3 +22,10 @@ class Check:
         for f in fields:
             res[f] = getattr(self, f)
         return res
+
+    def to_tuple(self) -> Tuple:
+        return self.status.value
+
+    @staticmethod
+    def from_dict(fields: Dict):
+        return Check(status=fields.get("status"))

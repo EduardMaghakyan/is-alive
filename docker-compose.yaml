@@ -11,6 +11,8 @@ services:
 
   is-alive-check:
     build: .
+    volumes:
+      - .:/app
     env_file:
       - .env.dev
     depends_on:
@@ -22,7 +24,9 @@ services:
     image: postgres
     restart: always
     environment:
+      POSTGRES_USER: is_alive_user
       POSTGRES_PASSWORD: example
+      POSTGRES_DB: is_alive
 
   kafka-ui:
     image: provectuslabs/kafka-ui:latest
@@ -55,6 +59,12 @@ services:
       - ALLOW_PLAINTEXT_LISTENER=yes
     depends_on:
       - zookeeper
+
+  adminer:
+    image: adminer
+    restart: always
+    ports:
+      - 8081:8080
 
 volumes:
   zookeeper_data:
