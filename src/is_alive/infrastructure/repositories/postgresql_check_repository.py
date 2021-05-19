@@ -4,6 +4,8 @@ from is_alive.application.repositories.check_repository import CheckRepository
 from is_alive.domain.model import Check
 
 
+# Not the most sophisticated implementation
+# and this implementation will definitely suffer from lost connection issues
 class PostgresqlCheckRepository(CheckRepository):
     def __init__(self, session: connection):
         self.session = session

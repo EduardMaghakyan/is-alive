@@ -1,10 +1,24 @@
 import pinject  # type: ignore
+import psycopg2
 from kafka import KafkaProducer  # type: ignore
 
 import is_alive.infrastructure.adapters as adapters
+import is_alive.infrastructure.repositories as repositories
 from is_alive.application.use_cases import CheckAvailability
 from is_alive.config import CONFIG
 from is_alive.infrastructure.adapters.kafka_event_publisher import MemoryProducer
+
+
+class ChecksReponsitorySpec(pinject.BindingSpec):
+    def configure(self, bind):
+        conf = CONFIG["repositories"]["check_repository"]
+        connection = psycopg2.connect(
+            database=conf["db_name"],
+            user=conf["user"],
+            password=conf["password"],
+            host=conf["host"],
+        )
+        bind("repository", to_instance=repositories.PostgresqlCheckRepository(connection))
 
 
 class RequesterSpec(pinject.BindingSpec):
@@ -35,7 +49,7 @@ class EventPublisherSpec(pinject.BindingSpec):
 
 object_graph = pinject.new_object_graph(
     modules=None,
-    binding_specs=[EventPublisherSpec(), RequesterSpec()],
+    binding_specs=[EventPublisherSpec(), RequesterSpec(), ChecksReponsitorySpec()],
 )
 
 
