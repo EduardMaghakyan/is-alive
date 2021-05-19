@@ -1,3 +1,4 @@
+from dataclasses import dataclass
 from typing import List
 
 from kafka import KafkaProducer  # type: ignore
@@ -26,13 +27,10 @@ class MemoryEventPublisher(EventPublisher):
         self.producer.send("topic", event.serialize())
 
 
+@dataclass
 class KafkaEventPublisher(EventPublisher):
     producer: KafkaProducer
     topic: str
-
-    def __init__(self, producer, topic):
-        self.producer = producer
-        self.topic = topic
 
     def publish(self, event: DomainEvent, **attributes) -> None:
         try:

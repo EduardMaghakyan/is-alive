@@ -24,8 +24,11 @@ class Check:
         return res
 
     def to_tuple(self) -> Tuple:
-        return self.status.value
+        return self.status.value  # type: ignore
 
     @staticmethod
     def from_dict(fields: Dict):
-        return Check(status=fields.get("status"))
+        status = fields.get("status")
+        if not status:
+            raise KeyError("Missing required key `status`")
+        return Check(status=CheckStatus[status])

@@ -11,8 +11,20 @@ services:
 
   is-alive-check:
     build: .
+#    volumes:
+#      - .:/app
+    env_file:
+      - .env.dev
+    depends_on:
+      - db
+      - zookeeper
+      - kafka
+
+  is-alive-collector:
+    build: .
+    command: ["python", "-m", "is_alive.interface.cli.collect_check_results"]
     volumes:
-      - .:/app
+      - ./src:/app
     env_file:
       - .env.dev
     depends_on:

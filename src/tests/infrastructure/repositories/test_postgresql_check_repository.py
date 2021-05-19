@@ -1,6 +1,6 @@
 import uuid
 
-import psycopg2
+import psycopg2  # type: ignore
 import pytest
 from psycopg2 import OperationalError
 

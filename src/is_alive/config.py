@@ -13,13 +13,18 @@ CONFIG: dict = {
             "topic": env("CHECKED_TOPIC", "status-checked"),
             "server": env("KAFKA_SERVER", "localhost:1234"),
         },
+        "event_subscriber": {
+            "type": env("EVENT_SUBSCRIBER_TYPE", "memory"),
+            "topic": env("CHECKED_TOPIC", "status-checked"),
+            "server": env("KAFKA_SERVER", "localhost:1234"),
+        },
     },
     "repositories": {
         "check_repository": {
             "db_name": env("CHECK_REPO_DB_NAME", "checks"),
             "user": env("CHECK_REPO_DB_USER", "demo"),
             "password": env("CHECK_REPO_DB_PASSWORD", "password"),
-            "host": env("CHECK_REPO_DB_PASSWORD", "localhost"),
+            "host": env("CHECK_REPO_DB_HOST", "localhost"),
         }
-    }
+    },
 }

@@ -58,7 +58,7 @@ def test_check_availability__unavailable(use_case):
 
     assert 1 == use_case.requester.calls
     assert isinstance(result, Check)
-    assert CheckStatus.SUCCESS == result.get_status()
+    assert CheckStatus.FAIL == result.get_status()
 
 
 def test_check_availability__published_event(use_case):

@@ -42,6 +42,6 @@ class CheckEncoder(json.JSONEncoder):
         elif hasattr(obj, "to_dict"):
             return obj.to_dict()
         if isinstance(obj, CheckStatus):
-            return {"__enum__": str(obj)}
+            return obj.value
 
         return json.JSONEncoder.default(self, obj)

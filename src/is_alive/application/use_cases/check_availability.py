@@ -15,8 +15,11 @@ class CheckAvailability(object):
 
     def __call__(self, url) -> Check:
         try:
-            self.requester.get(url)
-            checked = Check(CheckStatus.SUCCESS)
+            result = self.requester.get(url)
+            if result.status_code == 200:
+                checked = Check(CheckStatus.SUCCESS)
+            else:
+                checked = Check(CheckStatus.FAIL)
         except DomainException:
             checked = Check(CheckStatus.FAIL)
 
