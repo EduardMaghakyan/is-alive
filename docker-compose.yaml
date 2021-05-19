@@ -8,23 +8,12 @@ services:
     - .:/app
     env_file:
       - .env.dev
-
-  is-alive-check:
-    build: .
-#    volumes:
-#      - .:/app
-    env_file:
-      - .env.dev
     depends_on:
       - db
-      - zookeeper
       - kafka
 
-  is-alive-collector:
+  is-alive:
     build: .
-    command: ["python", "-m", "is_alive.interface.cli.collect_check_results"]
-    volumes:
-      - ./src:/app
     env_file:
       - .env.dev
     depends_on:
@@ -33,7 +22,7 @@ services:
       - kafka
 
   db:
-    image: postgres
+    build: ./build/psql
     restart: always
     environment:
       POSTGRES_USER: is_alive_user

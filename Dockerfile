@@ -16,4 +16,4 @@ RUN poetry install
 COPY ./src /app/
 RUN poetry install
 
-#ENTRYPOINT ["python", "-m", "is_alive.interface.cli.perform_check"]
+CMD ["python"]
